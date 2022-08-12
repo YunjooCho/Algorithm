@@ -23,7 +23,7 @@ int main(void)
 			res[idx] = i;
 		}
 	}
-	for (int i = 0; i < 26; i++)
+	for (int i = 0; i < RES_LEN; i++)
 	{
 		printf("%d ", res[i]);
 	}
