@@ -6,6 +6,7 @@
 *.out
 *.app
 *.ipa
+.DS_Store
 
 *.swp
 *.c.swp
