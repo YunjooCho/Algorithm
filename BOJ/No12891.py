@@ -1,34 +1,62 @@
 import sys
-import copy
 
 strLen, pwLen = map(int, sys.stdin.readline().rstrip().split())
-str = list(sys.stdin.readline().rstrip())
-cntList = list(map(int, sys.stdin.readline().rstrip().split()))
-check = copy.deepcopy(cntList)
-
+inputStr = list(sys.stdin.readline().rstrip())
+reqList = list(map(int, sys.stdin.readline().rstrip().split()))
+curList = [0] * 4
+standVal = 0
 result = 0
-i = 0
-j = i + (pwLen - 1)
 
-while j < strLen:
-	k = i
-	# print("i: %d, j: %d" % (i, j))
-	while k <= j:
-		if str[k] == 'A' and check[0] > 0:
-			check[0] -= 1
-		elif str[k] == 'C' and check[1] > 0:
-			check[1] -= 1
-		elif str[k] == 'G' and check[2] > 0:
-			check[2] -= 1
-		elif str[k] == 'T' and check[3] > 0:
-			check[3] -= 1
-		# print("str[%d]: %c" % (k, str[k]))
-		k += 1
-	sum = check[0] + check[1] + check[2] + check[3]
-	# print("sum : %d" % sum)
-	if sum == 0:
+def addElem(c):
+	global reqList, curList, standVal
+	if c == 'A':
+		curList[0] += 1
+		if curList[0] == reqList[0]:
+			standVal += 1
+	elif c == 'C':
+		curList[1] += 1
+		if curList[1] == reqList[1]:
+			standVal += 1
+	elif c == 'G':
+		curList[2] += 1
+		if curList[2] == reqList[2]:
+			standVal += 1
+	elif c == 'T':
+		curList[3] += 1
+		if curList[3] == reqList[3]:
+			standVal += 1
+
+def delElem(c):
+	global reqList, curList, standVal
+	if c == 'A':
+		if curList[0] == reqList[0]:
+			standVal -= 1
+		curList[0] -= 1
+	elif c == 'C':
+		if curList[1] == reqList[1]:
+			standVal -= 1
+		curList[1] -= 1
+	elif c == 'G':
+		if curList[2] == reqList[2]:
+			standVal -= 1
+		curList[2] -= 1
+	elif c == 'T':
+		if curList[3] == reqList[3]:
+			standVal -= 1
+		curList[3] -= 1
+
+for idx in range(4):
+	if reqList[idx] == 0:
+		standVal += 1
+for i in range(pwLen):
+	addElem(inputStr[i])
+if standVal == 4:
+	result += 1
+
+for i in range(pwLen, strLen):
+	j = i - pwLen
+	addElem(inputStr[i])
+	delElem(inputStr[j])
+	if standVal == 4:
 		result += 1
-	i += 1
-	j += 1
-	check = copy.deepcopy(cntList)
 print(result)
