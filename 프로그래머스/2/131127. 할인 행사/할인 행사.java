@@ -8,7 +8,6 @@ class Solution {
         
         int idx1 = 0;
         int idx2 = 10;
-        int flag = 0;
         int totalCnt = 10;
 
         while (idx1 <= discount.length - 10) {
@@ -25,17 +24,16 @@ class Solution {
                     checkCnt[pos]--;
                     totalCnt--;
                     if (checkCnt[pos] < 0) {
-                        flag = 1;
+                        totalCnt = -1;
                         break;
                     }
                 }
             }
-            if (flag == 0 && totalCnt == 0) {
+            if (totalCnt == 0) {
                 answer++;
             }
             idx1++;
             idx2++;
-            flag = 0;
             totalCnt = 10;
         }
         return answer;
